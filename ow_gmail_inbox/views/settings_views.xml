@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_gmail_inbox" model="ir.ui.view">
+        <field name="name">res.config.settings.gmail.inbox</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <div class="app_settings_block" data-string="Gmail Inbox" string="Gmail Inbox" data-key="ow_gmail_inbox" groups="base.group_system">
+                    <h2>Google OAuth Setup</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Google OAuth client</span>
+                                <div class="text-muted">Enable Gmail API in Google Cloud, configure the consent screen and create a Web application OAuth client.</div>
+                                <div class="content-group mt16">
+                                    <label for="ow_gmail_client_id" string="Client ID"/>
+                                    <field name="ow_gmail_client_id" placeholder="Your client ID ending in apps.googleusercontent.com"/>
+                                    <label for="ow_gmail_client_secret" string="Client Secret"/>
+                                    <field name="ow_gmail_client_secret" password="True"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="ow_gmail_base_url" string="Public Odoo URL"/>
+                                <div class="text-muted">Use your public HTTPS URL. HTTP localhost is supported for local development. Save before connecting an account.</div>
+                                <field name="ow_gmail_base_url" class="mt8" placeholder="https://erp.example.com"/>
+                            </div>
+                        </div>
+                    </div>
+                    <h2>Google Callback and Permission</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="ow_gmail_callback_url" string="Google authorized redirect URI"/>
+                                <div class="text-muted">Copy this exact URI into the Web application's Authorized redirect URIs in Google Cloud.</div>
+                                <field name="ow_gmail_callback_url" class="mt8" readonly="1" widget="CopyClipboardChar"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <span class="o_form_label">Mailbox permission</span>
+                                <div class="text-muted">Each user signs in on Google's authorization page. This app never asks for their Gmail password.</div>
+                                <div class="mt8 text-muted">Required scope: https://www.googleapis.com/auth/gmail.modify</div>
+                                <div class="mt8 text-muted">For an external testing app, add users to the OAuth test-user list. Public distribution may require Google's restricted-scope verification.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="action_gmail_settings" model="ir.actions.act_window">
+        <field name="name">Gmail Settings</field><field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field><field name="target">current</field>
+        <field name="context">{'module': 'ow_gmail_inbox'}</field>
+    </record>
+</odoo>
